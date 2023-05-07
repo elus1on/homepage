@@ -1,11 +1,4 @@
-# fresh project
+# elusion のほめぱげ
 
-### Usage
-
-Start the project:
-
-```
-deno task start
-```
-
-This will watch the project directory and restart as necessary.
+Deno/Fresh で遊ぶために作ったほめぱげだお！  
+deno task start で誰でも動かせるお！

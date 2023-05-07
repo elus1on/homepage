@@ -4,19 +4,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Fresh App</title>
+        <title>elusion のほめぱげ</title>
       </Head>
       <div>
-        <img
-          src="/logo.svg"
-          width="128"
-          height="128"
-          alt="the fresh logo: a sliced lemon dripping with juice"
-        />
-        <p>
-          Welcome to `fresh`. Try updating this message in the
-          ./routes/index.tsx file, and refresh.
-        </p>
+        <h1>ここは elusion のホームページだお！(＾ω＾)</h1>
+        <h1>
+          <a href={"/blog"}>ココに</a>ブログを作る予定だお(工事中)
+        </h1>
       </div>
     </>
   );
