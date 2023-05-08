@@ -9,7 +9,7 @@ export default function Home() {
       <div>
         <h1>ここは elusion のホームページだお！(＾ω＾)</h1>
         <h1>
-          <a href={"/blog"}>ココに</a>ブログを作る予定だお(工事中)
+          <a href={"/blog"}>ココに</a>ブログがあるお！みんな見ていってお(＾ω＾)
         </h1>
       </div>
     </>

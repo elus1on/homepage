@@ -1,10 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import extract from "$fm";
 
 const POST_DIR = "./posts/";
 
 interface Post {
-  slug: string;
-  updatedAt: Date;
+  title: string;
+  publishedAt: Date;
   url: string;
 }
 
@@ -13,12 +14,16 @@ async function getPostSlugs(): Promise<Post[]> {
   const posts: Post[] = [];
   for await (const file of files) {
     const slug = file.name.replace(".md", "");
-    const fullPath = `${POST_DIR}${file.name}`;
-    const updatedAt = (await Deno.stat(fullPath)).mtime || new Date();
     const url = `blog/${slug}`;
-    posts.push({ slug, updatedAt, url });
+    const post = await Deno.readTextFile(`${POST_DIR}${file.name}`);
+    const { attrs } = extract(post);
+    posts.push({
+      title: attrs.title as string,
+      publishedAt: attrs.date as Date,
+      url,
+    });
   }
-  return posts;
+  return posts.sort((a, b) => (a.publishedAt < b.publishedAt) ? 1 : -1);
 }
 
 export const handler: Handlers<Post[]> = {
@@ -36,7 +41,7 @@ export default function Index(props: PageProps<Post[]>) {
         {props.data.map((post) => {
           return (
             <li>
-              <a href={post.url}>{post.slug}</a>
+              <a href={post.url}>{post.title} - {post.publishedAt}</a>
             </li>
           );
         })}
