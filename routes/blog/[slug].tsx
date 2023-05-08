@@ -1,21 +1,27 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { CSS, render } from "$gfm";
 import { Head } from "$fresh/runtime.ts";
+import { extract } from "$fm";
 
 interface Post {
+  title: string;
+  publishedAt: Date;
   content: string;
 }
 
 async function getPost(slug: string): Promise<Post | undefined> {
-  let post = undefined;
+  let text = undefined;
   try {
-    post = await Deno.readTextFile(`./posts/${slug}.md`);
+    text = await Deno.readTextFile(`./posts/${slug}.md`);
   } catch (error) {
     console.error(`post not found: ${slug}`);
     return undefined;
   }
+  const { attrs, body } = extract(text);
   return {
-    content: post,
+    title: attrs.title as string,
+    publishedAt: attrs.date as Date,
+    content: body,
   };
 }
 
